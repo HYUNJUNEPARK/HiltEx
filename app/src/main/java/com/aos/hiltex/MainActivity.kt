@@ -7,7 +7,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.aos.hiltex.HiltApplication.Companion.TAG
 import com.aos.hiltex.databinding.ActivityMainBinding
-import com.aos.hiltex.di.FoodFactoryInLA
+import com.aos.hiltex.factory.FoodFactoryInLA
+import com.aos.hiltex.factory.FoodFactoryInNY
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     @Inject lateinit var foodFactoryInLA: FoodFactoryInLA
+    @Inject lateinit var foodFactoryInNY: FoodFactoryInNY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +25,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onTestButtonClicked() {
-        Log.d(TAG, "${foodFactoryInLA.makeCandy()}")
         Toast.makeText(this, "TestButton", Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "${foodFactoryInLA.makeCandy()}")
+        Log.d(TAG, "${foodFactoryInLA.makeChocolate()}")
+        Log.d(TAG, "${foodFactoryInLA.makeCoffee()}")
 
+        Log.d(TAG, "${foodFactoryInNY.makeCandy()}")
+        Log.d(TAG, "${foodFactoryInNY.makeChocolate()}")
+        Log.d(TAG, "${foodFactoryInNY.makeCoffee()}")
     }
 }
