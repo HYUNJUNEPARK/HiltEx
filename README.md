@@ -1,9 +1,5 @@
-
+# HiltEx
 -정리 중-
-
-
-Dependency injection with Hilt(프로젝트에 Hilt 추가)
-https://developer.android.com/training/dependency-injection/hilt-android#kts
 
 
 Dagger 2와 Hilt
@@ -79,6 +75,11 @@ ex) 빌더를 사용하여 인스턴스를 생성해야 하는 OkHttpClient
 @Binds
 인터페이스에 사용할 구현을 Hilt에 알리려면 Hilt 모듈 내 함수에 @Binds 주석을 사용
 
+---
+Dependency injection with Hilt(프로젝트에 Hilt 추가)
+https://developer.android.com/training/dependency-injection/hilt-android#kts
 
+Hilt CodeLab
+https://developer.android.com/codelabs/android-hilt?hl=ko#0
 
 
