@@ -1,16 +1,15 @@
 package com.aos.hiltex.factory
 
-import dagger.hilt.android.scopes.ActivityScoped
-import javax.inject.Inject
+import javax.inject.Singleton
 
 interface BaseMaterialFactory {
     fun getSugar(): Int
     fun getKakao(): Int
     fun getCoffeeBean(): Int
+    fun getDeliveryTime(): Long
 }
 
-@ActivityScoped
-class MaterialFactoryInLA @Inject constructor() : BaseMaterialFactory {
+class MaterialFactoryInLA : BaseMaterialFactory {
     override fun getSugar(): Int {
         return 1000
     }
@@ -22,10 +21,13 @@ class MaterialFactoryInLA @Inject constructor() : BaseMaterialFactory {
     override fun getCoffeeBean(): Int {
         return 2000
     }
+
+    override fun getDeliveryTime(): Long {
+        return System.currentTimeMillis()
+    }
 }
 
-@ActivityScoped
-class MaterialFactoryInLNY @Inject constructor(): BaseMaterialFactory {
+class MaterialFactoryInNY : BaseMaterialFactory {
     override fun getSugar(): Int {
         return 1020
     }
@@ -36,5 +38,8 @@ class MaterialFactoryInLNY @Inject constructor(): BaseMaterialFactory {
 
     override fun getCoffeeBean(): Int {
         return 2020
+    }
+    override fun getDeliveryTime(): Long {
+        return System.currentTimeMillis()
     }
 }

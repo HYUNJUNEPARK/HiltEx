@@ -21,7 +21,8 @@ class FoodFactoryInLA @Inject constructor(
         return Product(
             price = materialFactory.getSugar(),
             type = ProductType.CANDY,
-            madeBy = Location.LA
+            madeBy = Location.LA,
+            madeTime = materialFactory.getDeliveryTime()
         )
     }
 
@@ -29,7 +30,8 @@ class FoodFactoryInLA @Inject constructor(
         return Product(
             price = materialFactory.getKakao(),
             type = ProductType.CHOCOLATE,
-            madeBy = Location.LA
+            madeBy = Location.LA,
+            madeTime = materialFactory.getDeliveryTime()
         )
     }
 
@@ -37,20 +39,22 @@ class FoodFactoryInLA @Inject constructor(
         return Product(
             price = materialFactory.getCoffeeBean(),
             type = ProductType.COFFEE,
-            madeBy = Location.LA
+            madeBy = Location.LA,
+            madeTime = materialFactory.getDeliveryTime()
         )
     }
 }
 
 @ActivityScoped
 class FoodFactoryInNY @Inject constructor(
-    private val materialFactory: MaterialFactoryInLNY
+    private val materialFactory: MaterialFactoryInNY
 ): BaseFoodFactory {
     override fun makeCandy(): Product {
         return Product(
             price = materialFactory.getSugar(),
             type = ProductType.CANDY,
-            madeBy = Location.NY
+            madeBy = Location.NY,
+            madeTime = materialFactory.getDeliveryTime()
         )
     }
 
@@ -58,7 +62,8 @@ class FoodFactoryInNY @Inject constructor(
         return Product(
             price = materialFactory.getKakao(),
             type = ProductType.CANDY,
-            madeBy = Location.NY
+            madeBy = Location.NY,
+            madeTime = materialFactory.getDeliveryTime()
         )
     }
 
@@ -66,7 +71,8 @@ class FoodFactoryInNY @Inject constructor(
         return Product(
             price = materialFactory.getCoffeeBean(),
             type = ProductType.CANDY,
-            madeBy = Location.NY
+            madeBy = Location.NY,
+            madeTime = materialFactory.getDeliveryTime()
         )
     }
 }
