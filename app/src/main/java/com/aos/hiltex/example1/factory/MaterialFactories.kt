@@ -1,6 +1,4 @@
-package com.aos.hiltex.factory
-
-import javax.inject.Singleton
+package com.aos.hiltex.example1.factory
 
 interface BaseMaterialFactory {
     fun getSugar(): Int

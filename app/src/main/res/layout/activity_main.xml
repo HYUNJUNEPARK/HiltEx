@@ -7,13 +7,13 @@
 
         <variable
             name="mainActivity"
-            type="com.aos.hiltex.MainActivity" />
+            type="com.aos.hiltex.example1.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".example1.MainActivity">
 
         <Button
             android:layout_width="wrap_content"

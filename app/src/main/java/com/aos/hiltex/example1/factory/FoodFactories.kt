@@ -1,8 +1,8 @@
-package com.aos.hiltex.factory
+package com.aos.hiltex.example1.factory
 
-import com.aos.hiltex.enums.Location
-import com.aos.hiltex.model.Product
-import com.aos.hiltex.model.ProductType
+import com.aos.hiltex.example1.enums.Location
+import com.aos.hiltex.example1.model.Product
+import com.aos.hiltex.example1.model.ProductType
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.aos.hiltex
+package com.aos.hiltex.example1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,9 +6,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.aos.hiltex.HiltApplication.Companion.TAG
+import com.aos.hiltex.R
 import com.aos.hiltex.databinding.ActivityMainBinding
-import com.aos.hiltex.factory.FoodFactoryInLA
-import com.aos.hiltex.factory.FoodFactoryInNY
+import com.aos.hiltex.example1.factory.FoodFactoryInLA
+import com.aos.hiltex.example1.factory.FoodFactoryInNY
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

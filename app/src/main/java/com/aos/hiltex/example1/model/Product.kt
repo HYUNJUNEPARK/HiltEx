@@ -1,6 +1,6 @@
-package com.aos.hiltex.model
+package com.aos.hiltex.example1.model
 
-import com.aos.hiltex.enums.Location
+import com.aos.hiltex.example1.enums.Location
 
 data class Product (
     val price: Int = 0,
