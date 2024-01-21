@@ -1,27 +1,20 @@
 package com.aos.hiltex.example1.factory
 
-import com.aos.hiltex.example1.enums.Location
 import com.aos.hiltex.example1.model.Product
 import com.aos.hiltex.example1.model.ProductType
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
-interface BaseFoodFactory {
-    fun makeCandy(): Product
-    fun makeChocolate(): Product
-    fun makeCoffee(): Product
-}
-
 @ActivityScoped
 class FoodFactoryInLA @Inject constructor(
     private val materialFactory: MaterialFactoryInLA
-): BaseFoodFactory {
+): BaseFactory.BaseFoodFactory {
 
     override fun makeCandy(): Product {
         return Product(
             price = materialFactory.getSugar(),
             type = ProductType.CANDY,
-            madeBy = Location.LA,
+            madeBy = BaseFactory.Location.LA,
             madeTime = materialFactory.getDeliveryTime()
         )
     }
@@ -30,7 +23,7 @@ class FoodFactoryInLA @Inject constructor(
         return Product(
             price = materialFactory.getKakao(),
             type = ProductType.CHOCOLATE,
-            madeBy = Location.LA,
+            madeBy = BaseFactory.Location.LA,
             madeTime = materialFactory.getDeliveryTime()
         )
     }
@@ -39,7 +32,7 @@ class FoodFactoryInLA @Inject constructor(
         return Product(
             price = materialFactory.getCoffeeBean(),
             type = ProductType.COFFEE,
-            madeBy = Location.LA,
+            madeBy = BaseFactory.Location.LA,
             madeTime = materialFactory.getDeliveryTime()
         )
     }
@@ -48,12 +41,12 @@ class FoodFactoryInLA @Inject constructor(
 @ActivityScoped
 class FoodFactoryInNY @Inject constructor(
     private val materialFactory: MaterialFactoryInNY
-): BaseFoodFactory {
+): BaseFactory.BaseFoodFactory {
     override fun makeCandy(): Product {
         return Product(
             price = materialFactory.getSugar(),
             type = ProductType.CANDY,
-            madeBy = Location.NY,
+            madeBy = BaseFactory.Location.NY,
             madeTime = materialFactory.getDeliveryTime()
         )
     }
@@ -62,7 +55,7 @@ class FoodFactoryInNY @Inject constructor(
         return Product(
             price = materialFactory.getKakao(),
             type = ProductType.CANDY,
-            madeBy = Location.NY,
+            madeBy = BaseFactory.Location.NY,
             madeTime = materialFactory.getDeliveryTime()
         )
     }
@@ -71,7 +64,7 @@ class FoodFactoryInNY @Inject constructor(
         return Product(
             price = materialFactory.getCoffeeBean(),
             type = ProductType.CANDY,
-            madeBy = Location.NY,
+            madeBy = BaseFactory.Location.NY,
             madeTime = materialFactory.getDeliveryTime()
         )
     }

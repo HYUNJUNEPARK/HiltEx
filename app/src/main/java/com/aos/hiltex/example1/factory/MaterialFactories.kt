@@ -1,13 +1,6 @@
 package com.aos.hiltex.example1.factory
 
-interface BaseMaterialFactory {
-    fun getSugar(): Int
-    fun getKakao(): Int
-    fun getCoffeeBean(): Int
-    fun getDeliveryTime(): Long
-}
-
-class MaterialFactoryInLA : BaseMaterialFactory {
+class MaterialFactoryInLA : BaseFactory.BaseMaterialFactory {
     override fun getSugar(): Int {
         return 1000
     }
@@ -25,7 +18,7 @@ class MaterialFactoryInLA : BaseMaterialFactory {
     }
 }
 
-class MaterialFactoryInNY : BaseMaterialFactory {
+class MaterialFactoryInNY : BaseFactory.BaseMaterialFactory {
     override fun getSugar(): Int {
         return 1020
     }
