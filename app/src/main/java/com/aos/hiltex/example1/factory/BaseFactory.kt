@@ -19,4 +19,8 @@ class BaseFactory {
         fun getCoffeeBean(): Int
         fun getDeliveryTime(): Long
     }
+
+    interface BaseCarFactory {
+        fun getMadeInfo(): String
+    }
 }

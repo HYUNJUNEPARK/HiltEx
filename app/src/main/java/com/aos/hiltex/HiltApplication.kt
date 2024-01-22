@@ -6,6 +6,6 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class HiltApplication: Application() {
     companion object {
-        const val TAG = "testLog"
+        const val TAG = "debugLog"
     }
 }
