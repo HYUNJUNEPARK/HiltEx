@@ -41,8 +41,8 @@ abstract class AppDatabase: RoomDatabase() {
 
 @Entity(tableName = DB_NAME)
 data class Memo(
-    @PrimaryKey
-    var id: Long,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
 
     @ColumnInfo
     var content: String,

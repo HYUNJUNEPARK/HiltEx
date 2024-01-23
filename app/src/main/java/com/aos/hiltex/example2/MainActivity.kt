@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     //리스트 어댑터 + 클릭 콜백
     private val listAdapterEx: SampleListAdapter by lazy {
-        SampleListAdapter(itemClickListener = object : ClickListener.ClickEventListener{
+        SampleListAdapter(itemClickListener = object : SampleListAdapter.ClickEventListener {
             override fun onModifyLongClicked(item: Memo) {
                 Toast.makeText(this@MainActivity, "onLongClickEvent", Toast.LENGTH_SHORT).show()
             }
@@ -75,7 +75,6 @@ class MainActivity : AppCompatActivity() {
         if (binding.editMemo.text.isNotEmpty()) {
             sampleViewModel.addItem(
                 memo = Memo(
-                    id = System.currentTimeMillis(),
                     content = binding.editMemo.text.toString(),
                     dateTime = System.currentTimeMillis()
                 )

@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SampleListAdapter(
-    val itemClickListener: ClickListener.ClickEventListener?
+    val itemClickListener: ClickEventListener?
 ): ListAdapter<Memo, SampleListAdapter.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -71,6 +71,12 @@ class SampleListAdapter(
                 return@setOnLongClickListener true
             }
         }
+    }
+
+    interface ClickEventListener {
+        fun onModifyLongClicked(item: Memo)
+        fun onModifyShortClicked(newItem: Memo)
+        fun onDeleteClicked(item: Memo)
     }
 
     companion object {
