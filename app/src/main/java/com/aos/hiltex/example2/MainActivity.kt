@@ -16,7 +16,7 @@ import com.aos.hiltex.example2.vm.SampleViewModel
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     private val sampleViewModel: SampleViewModel by viewModels {
-        SampleViewModel.provideFactory(AppDatabase.getInstance(applicationContext))
+        SampleViewModel.Factory(AppDatabase.getInstance(applicationContext))
     }
 
     //리스트 어댑터 + 클릭 콜백

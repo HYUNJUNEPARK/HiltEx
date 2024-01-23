@@ -7,10 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SampleViewModel(
-    private val appDatabase: AppDatabase
-) : ViewModel() {
-
+class SampleViewModel(private val appDatabase: AppDatabase) : ViewModel() {
     private val _memoList = MutableLiveData<List<Memo>>()
     val memoList: LiveData<List<Memo>> get() = _memoList
 
@@ -74,13 +71,13 @@ class SampleViewModel(
         }
     }
 
-    companion object {
-        fun provideFactory(appDatabase: AppDatabase): AbstractSavedStateViewModelFactory =
-            object : AbstractSavedStateViewModelFactory() {
+    class Factory(private val appDatabase: AppDatabase): ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(SampleViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                override fun <T : ViewModel> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {
-                    return SampleViewModel(appDatabase) as T
-                }
+                return SampleViewModel(appDatabase) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
 }
