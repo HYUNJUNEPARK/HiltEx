@@ -1,31 +1,32 @@
 # HiltEx
 -정리 중-
 
--`com.aos.hiltex.example1` : @Inject, @Module, @Qualifier 사용을 볼 수 있는 기본 예시
--`com.aos.hiltex.example2` : Room
+-`com.aos.hiltex.example1` : @Inject, @Module, @Qualifier 사용을 볼 수 있는 기본 예시<br>
+-`com.aos.hiltex.example2` : Room<br>
 
 
-Dagger 2와 Hilt
--Hilt는 Dagger 설정 코드를 생성하는 코드로 작동한다.
+Dagger 2와 Hilt<br>
+-Hilt는 Dagger 설정 코드를 생성하는 코드로 작동한다.<br>
 -Dagger의 상용구를 제거하고 실제로 개체를 주입할 위치를 정의하는 측면만 남긴다.
 
 
-`@HiltAndroidApp`
--Hilt를 사용하는 모든 앱에는 `@HiltAndroidApp` 어노테이션이 달린 Application 클래스가 있어야 한다.
--Hilt Components의 코드 생성을 시작하고 생성된 Components를 사용하는 응용프로그램의 기본 클래스도 생성한다.
+`@HiltAndroidApp`<br>
+-Hilt를 사용하는 모든 앱에는 `@HiltAndroidApp` 어노테이션이 달린 Application 클래스가 있어야 한다.<br>
+-해당 Application클래스는 앱의 생명주기와 밀접하게 연결되며, 앱의 상위 컨테이너이므로 다른 컨테이너가 이 컨테이너에서 제공하는 클래스에 엑세스할 수 있다.<br>
+*컨테이너(Container):인스턴스를 저장하는 공간으로 참조가 필요한 클래스의 인스턴스들을 생성해주고 수명주기를 관리해 인스턴스를 제공하는 역할을한다.<br>
 ```kotlin
 @HiltAndroidApp
 class HiltApplication: Application()
 ```
 
 
-`@AndroidEntryPoint`
--액티비티나 프래그먼트 등에 붙여서 Hilt가 쓰인다는 것을 알려준다.
--주입 가능 클래스 ex) `Activity, Fragment, View, Service, BroadcastReceiver`
+`@AndroidEntryPoint`<br>
+-액티비티나 프래그먼트 등에 붙여서 Hilt가 쓰인다는 것을 알려준다.<br>
+-주입 가능 클래스 ex) `Activity, Fragment, View, Service, BroadcastReceiver`<br>
 
 
-`@Inject`
--클래스 이름 뒤에 @Inject 를 적어주고 constructor() 를 적어준다. -> 어딘가에서 클래스가 사용
+`@Inject`<br>
+1. 클래스 이름 뒤에 `@Inject constructor()`를 적어준다. -> 어딘가에서 클래스가 사용<br>
 ```kotlin
 class Store @Inject constructor() {
     fun open() = Log.i(TAG, "OPEN")
@@ -33,7 +34,8 @@ class Store @Inject constructor() {
 }
 ```
 
--사용할 객체 앞에 @Inject 를 적어준다 -> Hilt가 객체를 만들어 주입
+2. 사용할 객체 앞에 `@Inject`를 적어준다 -> Hilt가 객체를 만들어 주입<br>
+-클래스에 필드 주입(*private 에는 주입되지 않음)
 ```kotlin
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -50,12 +52,12 @@ class MainActivity : AppCompatActivity() {
 ```
 
 
-Hilt 모듈
-`@Module`
--Hilt에 모듈임을 알려준다.
+Hilt 모듈<br>
+`@Module`<br>
+-Hilt에 모듈임을 알려준다.<br>
 
-`@InstallIn`
--모듈이 어던 범위에서 쓰이는가를 나타낸다.
+`@InstallIn`<br>
+-모듈이 어던 범위에서 쓰이는가를 나타낸다.<br>
 -ex) `SingletonComponent, ActivityComponent` ...
 ```kotlin
 @InstallIn(SingletonComponent::class)
@@ -63,12 +65,42 @@ Hilt 모듈
 object FactoryModule 
 ```
 
-`@Qualifier`
-`@Bind`
--인터페이스가 어떻게 구현되는지 Hilt가 구분할 수 있게 된다.
+`@Qualifier`<br>
+`@Bind`<br>
+-특정 타입에 대해 여러 결합이 정의되어 있을 때, 인터페이스가 어떻게 구현되는지 Hilt가 구분할 수 있게 된다.
+
+`@Binds`<br>
+-인터페이스에 사용할 구현을 Hilt에 알리려면 Hilt 모듈 내 함수에 `@Binds` 주석을 사용한다.
+
+`@Singleton`<br>
+-애플리케이션 컨테이너에서 항상 같은 인스턴스를 제공한다.<br>
+-주석을 사용하여 인스턴스의 범위를 컨테이너로 지정한다. <br>
+-Hilt는 수명 주기가 다른 여러 컨테이너를 생성할 수 있으므로 이러한 컨테이너로 범위가 지정된 다양한 주석이 있다.<br>
+-인스턴스 범위를 애플리케이션 컨테이너로 지정하는 주석은 `@Singleton`
+
+`@Provides`<br>
+-외부 라이브러리(Retrofit, OkHttpClient, Room 등)에서 클래스가 제공되어 클래스를 소유하지 않은 경우에 사용한다.<br>
+-클래스를 직접 소유하지 않은 경우, Hilt 모듈 내에 함수를 생성하고 함수에 `@Provides` 어노테이션을 지정한다.<br>
+```kotlin
+@Module
+@InstallIn(ActivityComponent::class)
+object AnalyticsModule {
+    @Singleton
+    @Provides
+    fun provideAnalyticsService() : AnalyticsService {
+        return Retrofit.Builder()
+            .baseUrl("https://example.com")
+            .build()
+            .create(AnalyticsService::class.java)
+    }
+}
+```
 
 
 
+
+
+======
 
 
 ViewModel은 별도의 API @HiltViewModel을 통해 지원
@@ -103,22 +135,6 @@ Hilt는 현재 Android 유형 중 Application(@HiltAndroidApp 사용), Activity,
 class ScopedBinding @Inject constructor() { ... }
 ```
 
-
-
-@Singleton : 애플리케이션 컨테이너에서 항상 같은 인스턴스를 제공
-주석을 사용하여 인스턴스의 범위를 컨테이너로 지정할 수 있습니다. Hilt는 수명 주기가 다른 여러 컨테이너를 생성할 수 있으므로 이러한 컨테이너로 범위가 지정된 다양한 주석이 있습니다.
-인스턴스 범위를 애플리케이션 컨테이너로 지정하는 주석은 @Singleton입니다.
-
-
-
-
-@Provides로 인스턴스 제공
-@Provides 주석을 달아 Hilt에 생성자가 삽입될 수 없는 유형의 제공 방법을 알려 줄 수 있습니다.
-@Provides 주석이 있는 함수 본문은 Hilt에서 이 유형의 인스턴스를 제공해야 할 때마다 실행됩니다.
-@Provides 주석이 있는 함수의 반환 유형은 Hilt에 결합 유형 또는 유형의 인스턴스 제공 방법을 알려 줍니다.
-
-@Binds
-인터페이스에 사용할 구현을 Hilt에 알리려면 Hilt 모듈 내 함수에 @Binds 주석을 사용
 
 ---
 Dependency injection with Hilt(프로젝트에 Hilt 추가)
