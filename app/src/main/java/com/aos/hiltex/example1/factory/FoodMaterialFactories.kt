@@ -1,6 +1,8 @@
 package com.aos.hiltex.example1.factory
 
-class MaterialFactoryInLA : BaseFactory.BaseMaterialFactory {
+import javax.inject.Inject
+
+class MaterialFactoryInLA @Inject constructor() : BaseFactory.BaseMaterialFactory {
     override fun getSugar(): Int {
         return 1000
     }
@@ -18,7 +20,7 @@ class MaterialFactoryInLA : BaseFactory.BaseMaterialFactory {
     }
 }
 
-class MaterialFactoryInNY : BaseFactory.BaseMaterialFactory {
+class MaterialFactoryInNY @Inject constructor(): BaseFactory.BaseMaterialFactory {
     override fun getSugar(): Int {
         return 1020
     }

@@ -1,10 +1,14 @@
 package com.aos.hiltex.example2.vm
 
-import androidx.lifecycle.*
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.aos.hiltex.HiltApplication.Companion.TAG
 import com.aos.hiltex.example2.db.AppDatabase
 import com.aos.hiltex.example2.db.Memo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,7 +19,8 @@ class SampleViewModel @Inject constructor(private val appDatabase: AppDatabase) 
     val memoList: LiveData<List<Memo>> get() = _memoList
 
     init {
-        if (memoList.value == null) getAllItems()
+        Log.d(TAG, "SampleViewModel init")
+        getAllItems()
     }
 
     /**
