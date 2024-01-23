@@ -3,11 +3,14 @@ package com.aos.hiltex.example2.vm
 import androidx.lifecycle.*
 import com.aos.hiltex.example2.db.AppDatabase
 import com.aos.hiltex.example2.db.Memo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SampleViewModel(private val appDatabase: AppDatabase) : ViewModel() {
+@HiltViewModel
+class SampleViewModel @Inject constructor(private val appDatabase: AppDatabase) : ViewModel() {
     private val _memoList = MutableLiveData<List<Memo>>()
     val memoList: LiveData<List<Memo>> get() = _memoList
 
@@ -18,13 +21,9 @@ class SampleViewModel(private val appDatabase: AppDatabase) : ViewModel() {
     /**
      * DB 에 저장된 모든 데이터를 가져와, LiveData(memoList) 를 초기화한다.
      */
-    private fun getAllItems() = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            appDatabase.memoDao().getAll().let { itemList ->
-                _memoList.postValue(itemList)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+    private fun getAllItems() = viewModelScope.launch(Dispatchers.IO) {
+        appDatabase.memoDao().getAll().let { itemList ->
+            _memoList.postValue(itemList)
         }
     }
 
@@ -33,13 +32,9 @@ class SampleViewModel(private val appDatabase: AppDatabase) : ViewModel() {
      *
      * @param memo 저장하려는 아이템
      */
-    fun addItem(memo: Memo) = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            appDatabase.memoDao().insert(memo)
-            getAllItems() //데이터 동기화
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    fun addItem(memo: Memo) = viewModelScope.launch(Dispatchers.IO) {
+        appDatabase.memoDao().insert(memo)
+        getAllItems()
     }
 
     /**
@@ -47,37 +42,18 @@ class SampleViewModel(private val appDatabase: AppDatabase) : ViewModel() {
      *
      * @param newMemo 수정하려는 아이템
      */
-    fun updateItem(newMemo: Memo) = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            appDatabase.memoDao().update(newMemo)
-            getAllItems() //데이터 동기화
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+    fun updateItem(newMemo: Memo) = viewModelScope.launch(Dispatchers.IO) {
+        appDatabase.memoDao().update(newMemo)
+        getAllItems()
     }
-
 
     /**
      * DB 에 저장된 특정 아이템을 삭제한다.
      *
      * @param memo 삭제하려는 아이템
      */
-    fun deleteItem(memo: Memo) = CoroutineScope(Dispatchers.IO).launch {
-        try {
-            appDatabase.memoDao().delete(memo)
-            getAllItems() //데이터 동기화
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    class Factory(private val appDatabase: AppDatabase): ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SampleViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return SampleViewModel(appDatabase) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
+    fun deleteItem(memo: Memo) = viewModelScope.launch(Dispatchers.IO) {
+        appDatabase.memoDao().delete(memo)
+        getAllItems()
     }
 }
