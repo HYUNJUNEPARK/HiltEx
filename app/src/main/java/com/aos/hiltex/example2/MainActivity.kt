@@ -19,9 +19,19 @@ class MainActivity : AppCompatActivity() {
         SampleViewModel.Factory(AppDatabase.getInstance(applicationContext))
     }
 
-    //리스트 어댑터 + 클릭 콜백
-    private val listAdapterEx: SampleListAdapter by lazy {
-        SampleListAdapter(itemClickListener = object : SampleListAdapter.ClickEventListener {
+    private lateinit var listAdapterEx: SampleListAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main2)
+        binding.mainActivity = this@MainActivity
+
+        initRecyclerView()
+        observeLiveData()
+    }
+
+    private fun initRecyclerView() {
+        listAdapterEx = SampleListAdapter(itemClickListener = object : SampleListAdapter.ClickEventListener {
             override fun onModifyLongClicked(item: Memo) {
                 Toast.makeText(this@MainActivity, "onLongClickEvent", Toast.LENGTH_SHORT).show()
             }
@@ -32,20 +42,11 @@ class MainActivity : AppCompatActivity() {
                 sampleViewModel.deleteItem(item)
             }
         })
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main2)
-        binding.mainActivity = this@MainActivity
 
         binding.recyclerView.apply {
             adapter = listAdapterEx
             setHasFixedSize(true)
         }
-
-        //DB 데이터 -> RV 어댑터 전달
-        observeLiveData()
     }
 
     private fun observeLiveData() {
