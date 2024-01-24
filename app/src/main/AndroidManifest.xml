@@ -14,21 +14,23 @@
         android:theme="@style/Theme.HiltEx"
         tools:targetApi="31">
         <activity
-            android:name=".example2.MainActivity"
+            android:name=".example3.MainActivity"
             android:exported="true">
-
-
-        </activity>
-
-        <activity
-            android:name=".example1.MainActivity"
-            android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".example2.MainActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".example1.MainActivity"
+            android:exported="true">
+
         </activity>
     </application>
 
